@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RoseWriter</title>
+
+  <style>
+    body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #fff3f5;
+  color: #333;
+  transition:
+    background 0.3s,
+    color 0.3s;
+}
+
+body.dark {
+  background-color: #1c1c1c;
+  color: #f8f8f8;
+}
+
+.rose-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.editor-card {
+  width: 90%;
+  max-width: 720px;
+  padding: 25px 30px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+}
+
+body.dark .editor-card {
+  background: #2b2b2b;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+select,
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #ff6f91;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover,
+select:hover {
+  background-color: #e85d7c;
+}
+
+textarea {
+  width: 100%;
+  height: 300px;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #fff9fa;
+  color: inherit;
+  font-size: 16px;
+  font-family: "Courier New", monospace;
+  resize: none;
+  outline: none;
+}
+
+body.dark textarea {
+  background-color: #1f1f1f;
+  color: #fff;
+}
+
+footer {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+}
+
+body.dark footer {
+  color: #ccc;
+}
+
+  </style>
+
+  
+</head>
+<body>
+  <link rel="stylesheet" href="style.css" />
+
+  <div class="rose-container">
+    <div class="editor-card">
+      <header>
+        <h1>🪻 Easy Writer</h1>
+        <p>Minimal Offline Writing Tool</p>
+      </header>
+
+      <div class="toolbar">
+        <select id="docSelect" onchange="switchDoc()">
+          <option value="doc1">Document 1</option>
+          <option value="doc2">Document 2</option>
+          <option value="doc3">Document 3</option>
+        </select>
+
+        <select onchange="changeFont(this.value)">
+          <option value="'Courier New'">Courier New</option>
+          <option value="Arial">Arial</option>
+          <option value="Georgia">Georgia</option>
+        </select>
+
+        <button onclick="toggleDarkMode()">🌙</button>
+        <button onclick="downloadPDF()">📄 PDF</button>
+        <button onclick="downloadTXT()">📄 TXT</button>
+        <button onclick="clearEditor()">🧹</button>
+      </div>
+
+      <textarea id="editor" placeholder="Write here..."></textarea>
+
+      <footer>
+        <span id="wordCount">Words: 0</span> |
+        <span id="charCount">Characters: 0</span>
+        <span id="saveStatus">✅ All changes saved</span>
+      </footer>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+
+  <script>
+    const textarea = document.getElementById("editor");
+let currentDoc = "doc1";
+const { jsPDF } = window.jspdf;
+
+function switchDoc() {
+  currentDoc = document.getElementById("docSelect").value;
+  textarea.value = localStorage.getItem(currentDoc) || "";
+  updateCount();
+  showSavedStatus();
+}
+
+function saveText() {
+  localStorage.setItem(currentDoc, textarea.value);
+  updateCount();
+  showSavingStatus();
+}
+
+textarea.addEventListener("input", saveText);
+
+function updateCount() {
+  const text = textarea.value;
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  const chars = text.length;
+  document.getElementById("wordCount").textContent = `Words: ${words}`;
+  document.getElementById("charCount").textContent = `Characters: ${chars}`;
+}
+
+function toggleDarkMode() {
+  document.body.classList.toggle("dark");
+}
+
+function changeFont(font) {
+  textarea.style.fontFamily = font;
+}
+
+function downloadPDF() {
+  const doc = new jsPDF();
+  const lines = doc.splitTextToSize(textarea.value, 180);
+  doc.text(lines, 10, 20);
+  doc.save(`${currentDoc}.pdf`);
+}
+
+function downloadTXT() {
+  const blob = new Blob([textarea.value], { type: "text/plain" });
+  const link = document.createElement("a");
+  link.download = `${currentDoc}.txt`;
+  link.href = URL.createObjectURL(blob);
+  link.click();
+}
+
+function clearEditor() {
+  if (confirm("Clear this document?")) {
+    textarea.value = "";
+    localStorage.removeItem(currentDoc);
+    updateCount();
+    showSavedStatus();
+  }
+}
+
+let timeout;
+function showSavingStatus() {
+  clearTimeout(timeout);
+  document.getElementById("saveStatus").textContent = "💾 Saving...";
+  timeout = setTimeout(showSavedStatus, 1000);
+}
+
+function showSavedStatus() {
+  document.getElementById("saveStatus").textContent = "✅ All changes saved";
+}
+
+switchDoc();
+
+  </script>
+</body>
+</html>
