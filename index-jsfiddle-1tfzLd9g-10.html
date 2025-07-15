@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ishika Verma – Creative Portfolio</title>
+
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f9f9f9;
+      color: #222;
+      overflow-x: hidden;
+    }
+    header {
+      background: #333;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      gap: 30px;
+      background: #fff;
+    }
+    .hero img {
+      width: 200px;
+      border-radius: 50%;
+      border: 5px solid #38bdf8;
+    }
+    .hero .intro {
+      max-width: 400px;
+    }
+    .intro h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    .projects {
+      padding: 60px 20px;
+      text-align: center;
+      background: #f1f5f9;
+    }
+    .project-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .project-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 280px;
+      padding: 20px;
+      transition: transform 0.3s ease;
+      opacity: 0;
+    }
+    .project-card:hover {
+      transform: scale(1.05);
+    }
+    .project-card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .project-card h3 {
+      margin: 15px 0 5px;
+      font-size: 1.2rem;
+    }
+    .project-card p {
+      font-size: 0.9rem;
+      color: #444;
+    }
+    .about {
+      padding: 60px 20px;
+      text-align: center;
+      background: #e2e8f0;
+      opacity: 0;
+    }
+    .contact {
+      padding: 60px 20px;
+      text-align: center;
+      background: #f8fafc;
+      opacity: 0;
+    }
+    .contact-info {
+      margin-top: 20px;
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+    .contact-info a {
+      color: #0ea5e9;
+      text-decoration: none;
+    }
+    .contact-info a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      background: #222;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+    }
+  </style>
+
+  
+</head>
+<body>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <header>
+    <h1 id="title">Hey, I'm Ishika Verma</h1>
+    <p id="tagline">Learner Frontend Developer.</p>
+  </header>
+
+  <section class="hero">
+    <img src="https://i.postimg.cc/sXW5C0wD/Whats-App-Image-2025-06-18-at-18-29-03-2.jpg$0" alt="My Profile Picture" class="hero-img" />
+    <div class="intro">
+      <h2>Welcome to My Portfolio</h2>
+      <p>I am learning to build sleek, interactive websites with smooth animations and a touch of creativity. Let’s build something awesome together!</p>
+    </div>
+  </section>
+
+  <section class="projects">
+    <h2>My Projects</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <img src="https://i.postimg.cc/CMDs3dQH/IMG-0518.webp$0" alt="Project 1" />
+        <h3>Smart recipe management</h3>
+        <p>A smart recipe management system project which has a database. This will give you a perfect recipe by knowing the ingredients present in your kitchen.
+        </p>
+      </div>
+      <div class="project-card">
+        <img src="https://i.postimg.cc/BnwScZsR/IMG-0519.jpg$0" alt="Project 2" />
+        <h3>Flight management system</h3>
+        <p>A simple flight management system was made by me with my team. It uses shortest path method to give us the most affordable and compatable path according to our needs..</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about">
+    <h2>About Me</h2>
+    <p>I am a 2nd-year Computer Science student passionate about front-end developer in the learning phase, focused on building clean, responsive, and user-friendly websites using HTML, CSS, and JavaScript. I'm currently exploring frameworks like React and improving my UI/UX design skills.I'm enthusiastic about turning ideas into interactive experiences and continuously growing as a developer through hands-on projects and learning new technologies.</p>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2>Contact Me</h2>
+    <div class="contact-info">
+      <p><strong>📞 Phone:</strong> +91-8956578412</p>
+      <p><strong>📍 Address:</strong> Rose Valley Society, Jambe, Pune</p>
+      <p><strong>🔗 LinkedIn:</strong>
+        <a href="https://www.linkedin.com/in/ishika-verma-4b4a54294?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app$0" target="_blank">linkedin.com/in/ishika-verma</a>
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Ishika Verma | Designed with ❤️ and GSAP
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Header
+    gsap.from("#title", { y: -60, opacity: 0, duration: 1 });
+    gsap.from("#tagline", { y: -30, opacity: 0, duration: 1, delay: 0.3 });
+
+    // Hero
+    gsap.from(".hero-img", { x: -100, opacity: 0, duration: 1, delay: 0.6 });
+    gsap.from(".intro", { x: 100, opacity: 0, duration: 1, delay: 0.8 });
+
+    // Projects
+    gsap.utils.toArray(".project-card").forEach((card, i) => {
+      gsap.to(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: "top 85%",
+        },
+        opacity: 1,
+        y: -20,
+        duration: 0.8,
+        delay: i * 0.2,
+        ease: "power2.out"
+      });
+    });
+
+    // About
+    gsap.to(".about", {
+      scrollTrigger: {
+        trigger: ".about",
+        start: "top 85%",
+      },
+      opacity: 1,
+      y: -20,
+      duration: 1
+    });
+
+    // Contact
+    gsap.to(".contact", {
+      scrollTrigger: {
+        trigger: ".contact",
+        start: "top 85%",
+      },
+      opacity: 1,
+      y: -20,
+      duration: 1
+    });
+  </script>
+</body>
+</html>
