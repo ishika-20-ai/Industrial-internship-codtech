@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Online Learning Platform</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f0f4f8;
+      color: #333;
+    }
+    header {
+      background-color: #cfe2ff;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background: #e2e3e5;
+    }
+    nav a {
+      text-decoration: none;
+      margin-right: 15px;
+      color: #333;
+    }
+    .login-btn {
+      background-color: #6c757d;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .container {
+      padding: 20px;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .section img {
+      width: 100%;
+      max-height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .progress-btn {
+      margin-top: 10px;
+      padding: 10px 15px;
+      background: #d1e7dd;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .completed {
+      background-color: #a3cfbb !important;
+    }
+    .quiz-question {
+      margin-bottom: 15px;
+    }
+    input[type="radio"] {
+      margin-right: 10px;
+    }
+    .contact {
+      background-color: #e2f0d9;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    footer {
+      text-align: center;
+      background: #cfe2ff;
+      padding: 10px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 300px;
+    }
+    .modal-content input {
+      display: block;
+      margin-bottom: 15px;
+      width: 100%;
+      padding: 8px;
+    }
+    .close {
+      float: right;
+      cursor: pointer;
+    }
+    #progressContainer {
+      margin-top: 20px;
+    }
+    #progressBar {
+      background-color: #198754;
+      height: 100%;
+      width: 0%;
+      transition: width 0.5s;
+    }
+    .progress-wrapper {
+      background: #dee2e6;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 20px;
+    }
+  </style>
+
+  
+</head>
+<body>
+  <header>
+  <h1>EDUBLOOM</h1>
+  <p>Welcome to your personalized learning space</p>
+</header>
+
+<nav>
+  <div>
+    <a href="#">Home</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <button class="login-btn" onclick="openModal()">Login</button>
+</nav>
+
+<div class="container">
+
+  <!-- Video Lesson Section with Progress Bar -->
+  <div class="section" id="video">
+    <h2>Video Lesson: Introduction to HTML</h2>
+    <img src="https://source.unsplash.com/800x250/?code,learn" alt="Lesson Banner" />
+    <p>This video explains the basics of HTML, the building block of web development:</p>
+
+    <iframe width="100%" height="315"
+      src="https://www.youtube.com/embed/qz0aGYrrlhU"
+      title="HTML Full Course - Build a Website Tutorial"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+
+    <button id="progressBtn" class="progress-btn" onclick="markAsWatched()">Mark as Watched</button>
+
+    <div id="progressContainer">
+      <label for="progressBar"><strong>Lesson Progress:</strong></label>
+      <div class="progress-wrapper">
+        <div id="progressBar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quiz Section -->
+  <div class="section" id="quiz">
+    <h2>Quick Quiz</h2>
+    <div class="quiz-question">
+      <p>1. What does HTML stand for?</p>
+      <label><input type="radio" name="q1">Hyper Text Markup Language</label><br>
+      <label><input type="radio" name="q1">Home Tool Markup Language</label>
+    </div>
+    <div class="quiz-question">
+      <p>2. What is the correct tag for inserting a line break?</p>
+      <label><input type="radio" name="q2">&lt;br&gt;</label><br>
+      <label><input type="radio" name="q2">&lt;hr&gt;</label>
+    </div>
+    <div class="quiz-question">
+      <p>3. Which tag is used for JavaScript?</p>
+      <label><input type="radio" name="q3">&lt;script&gt;</label><br>
+      <label><input type="radio" name="q3">&lt;js&gt;</label>
+    </div>
+  </div>
+
+  <!-- Contact Section -->
+  <div class="section contact" id="contact">
+    <h2>Contact Me</h2>
+    <p>Name: Ishika Verma</p>
+    <p>Email: ishikaverma@email.com</p>
+    <p>Phone: +91-9876543210</p>
+    <p>LinkedIn: <a href="https://www.linkedin.com/in/ishikaverma" target="_blank">linkedin.com/in/ishikaverma</a></p>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Ishika Verma | All rights reserved.</p>
+</footer>
+
+<!-- Login Modal -->
+<div class="modal" id="loginModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3>Login</h3>
+    <input type="text" placeholder="Username" />
+    <input type="password" placeholder="Password" />
+    <button class="login-btn">Submit</button>
+  </div>
+</div>
+
+<!-- Scripts -->
+
+  <script>
+    function openModal() {
+    document.getElementById("loginModal").style.display = "flex";
+  }
+
+  function closeModal() {
+    document.getElementById("loginModal").style.display = "none";
+  }
+
+  window.onclick = function (event) {
+    if (event.target == document.getElementById("loginModal")) {
+      closeModal();
+    }
+  };
+
+  // Progress Tracking
+  function markAsWatched() {
+    localStorage.setItem("videoWatched", "true");
+    updateProgressUI();
+  }
+
+  function updateProgressUI() {
+    const watched = localStorage.getItem("videoWatched") === "true";
+    const btn = document.getElementById("progressBtn");
+    const bar = document.getElementById("progressBar");
+
+    if (watched) {
+      btn.textContent = "Watched ✔";
+      btn.classList.add("completed");
+      btn.disabled = true;
+      bar.style.width = "100%";
+    } else {
+      btn.textContent = "Mark as Watched";
+      btn.classList.remove("completed");
+      btn.disabled = false;
+      bar.style.width = "0%";
+    }
+  }
+
+  // Check progress on load
+  window.onload = updateProgressUI;
+  </script>
+</body>
+</html>
