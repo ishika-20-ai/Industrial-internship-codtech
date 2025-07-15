@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Display a list of products with cart functionality</title>
+
+  <style>
+    body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background: #FFF3F3;
+  transition: background 0.3s, color 0.3s;
+}
+
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sidebar {
+  background: #6C5CE7;
+  color: white;
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.sidebar button {
+  display: block;
+  background: white;
+  color: #6C5CE7;
+  border: none;
+  margin: 10px auto;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.main {
+  padding: 20px;
+  width: 100%;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.product-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.product-card button {
+  background: #FF926E;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.cart {
+  margin-top: 30px;
+  background: #F6F1ED;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+body.dark {
+  background: #1E1E2F;
+  color: #eee;
+}
+
+body.dark .sidebar {
+  background: #333;
+}
+
+body.dark .product-card,
+body.dark .cart {
+  background: #2D2D44;
+  color: white;
+}
+
+  </style>
+
+  
+</head>
+<body>
+  <div class="wrapper">
+  <aside class="sidebar">
+    <h2>🛍️ BuyBliss</h2>
+    <button onclick="toggleDarkMode()">🌗 Dark Mode</button>
+    <button onclick="toggleCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
+  </aside>
+
+  <main class="main">
+    <div class="products" id="productList"></div>
+    <div class="cart" id="cartView" style="display: none;">
+      <h3>Your Cart</h3>
+      <ul id="cartItems"></ul>
+      <p><strong>Total: ₹<span id="cartTotal">0</span></strong></p>
+      <button onclick="clearCart()">🧹 Clear Cart</button>
+    </div>
+  </main>
+</div>
+
+
+  <script>
+    const products = [
+  { id: 1, name: "Stylish Shirt", price: 499, image: "https://i.postimg.cc/7Y76GYmg/IMG-0562.jpg$0" },
+  { id: 2, name: "Cool Shoes", price: 999, image: "https://i.postimg.cc/G3DrzgGR/IMG-0563.webp$0" },
+  { id: 3, name: "Trendy Watch", price: 799, image: "https://i.postimg.cc/dV6Jr7dT/IMG-0565.jpg$0" },
+  { id: 4, name: "Denim Jacket", price: 1199, image: "https://i.postimg.cc/Wp0L0Fcb/IMG-0564.jpg$0" }
+];
+
+function loadProducts() {
+  const productList = document.getElementById("productList");
+  productList.innerHTML = "";
+  products.forEach(p => {
+    productList.innerHTML += `
+      <div class="product-card">
+        <img src="${p.image}" alt="${p.name}">
+        <h4>${p.name}</h4>
+        <p>₹${p.price}</p>
+        <button onclick="addToCart(${p.id})">Add to Cart</button>
+      </div>
+    `;
+  });
+}
+
+function addToCart(id) {
+  let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  const product = products.find(p => p.id === id);
+  cart.push(product);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
+}
+
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  document.getElementById("cartCount").innerText = cart.length;
+}
+
+function toggleCart() {
+  const cartEl = document.getElementById("cartView");
+  cartEl.style.display = cartEl.style.display === "none" ? "block" : "none";
+  showCart();
+}
+
+function showCart() {
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  const list = document.getElementById("cartItems");
+  const totalEl = document.getElementById("cartTotal");
+
+  let total = 0;
+  list.innerHTML = "";
+  cart.forEach(item => {
+    total += item.price;
+    list.innerHTML += `<li>${item.name} - ₹${item.price}</li>`;
+  });
+  totalEl.innerText = total;
+}
+
+function clearCart() {
+  localStorage.removeItem("cart");
+  updateCartCount();
+  showCart();
+}
+
+function toggleDarkMode() {
+  document.body.classList.toggle("dark");
+}
+
+window.onload = () => {
+  loadProducts();
+  updateCartCount();
+};
+
+  </script>
+</body>
+</html>
